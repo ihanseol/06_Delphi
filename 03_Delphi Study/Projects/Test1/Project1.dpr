@@ -7,7 +7,10 @@ uses
   Vcl.Styles,
   Unit1 in '..\Unit1.pas',
   UnitPerson in 'UnitPerson.pas',
-  UnitPerson2 in 'UnitPerson2.pas';
+  UnitPerson2 in 'UnitPerson2.pas',
+  TClassInheritMultipleCLass_01 in 'TClassInheritMultipleCLass_01.pas',
+  Unit4 in 'Unit4.pas',
+  YangSooFileUnit in '..\YangSooFileUnit.pas';
 
 {$R *.res}
 

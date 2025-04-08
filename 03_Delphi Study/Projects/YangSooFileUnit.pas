@@ -3,9 +3,13 @@
 interface
 
 uses
-  Windows, SysUtils, Classes, Vcl.Forms, Vcl.Dialogs, Vcl.Controls, System.Generics.Collections;
+  Windows,  Vcl.Forms, Vcl.Dialogs, Vcl.Controls, System.Generics.Collections,
+  System.Classes, System.DateUtils, System.SysUtils;
 
 type
+  // ***********************************************************************************************
+  // TAQTBASE
+
   TAQTBASE = class
   private
     FAQTESOLV_PATH: string;
@@ -35,18 +39,21 @@ type
     property DEBUG_YES: Boolean read FDEBUG_YES write FDEBUG_YES;
   end;
 
-  TPathChecker = class
+  // TAQTBASE
+  // ***********************************************************************************************
+
+
+  // ***********************************************************************************************
+  //TFileBase
+
+  TFileBase = class(TAQTBASE)
   private
-    const
+  // this is for pathchecker
+   const
       RET_FILE = 1;
       RET_DIR = 2;
       RET_NOTHING = 0;
-  public
-    function CheckPath(const Path: string): Integer;
-    function ResolvePath(const Path: string): Integer;
-  end;
-
-  TFileBase = class(TAQTBASE)
+  // this is for pathchecker
   private
     FDirectory: string;
     FFiles: TStringList;
@@ -56,6 +63,13 @@ type
     constructor Create(const Directory: string = 'D:\05_Send\'); override;
     destructor Destroy; override;
     procedure RefreshFiles;
+
+    //
+    // include pathchecker class , this is for PathChecker
+    function CheckPath(const Path: string): Integer;
+    function ResolvePath(const Path: string): Integer;
+    //
+
     function GetXlsmFiles: TStringList;
     function GetXlsxFiles: TStringList;
     function GetAqtFiles: TStringList;
@@ -67,38 +81,62 @@ type
     function GetListFiles(const FileList: array of string): TStringList;
     function GetXlsmFilter(const Path: string = ''; const SFilter: string = '*_ge_OriginalSaveFile.xlsm'): TStringList;
     function GetJpgFilter(const Path: string = ''; const SFilter: string = '*page1.jpg'): TStringList;
+
     function HasPath(const FileName: string): Boolean;
     function SeparateFileName(const FileName: string; out Name, Ext: string): Boolean;
     function SeparatePath(const FilePath: string; out Dir, BaseName: string): Boolean;
+
     function IsHidden(const FilePath: string): Boolean;
+
     function ListDirectoryContents(const Path: string): TStringList;
     function ListDirectoriesOnly(const Path: string): TStringList;
     function ListNonHiddenDirectories(const Path: string): TStringList;
     function ListHiddenDirectories(const Path: string): TStringList;
+
     function LastOne(const Path: string): string;
     function GetDirName(const FilePath: string): string;
     function GetBaseName(const FilePath: string): string;
+
     function IsExist(const FilePath: string): Boolean;
     function SetPathStringToSlash(const FilePath: string): string;
     function JoinPathFromList(const FilePathList: TStringList): string;
+
     function CopyFile(const Source, Destination: string): Boolean;
     function MoveFile(const Source, Destination: string): Boolean;
     function MoveFileCheck(const Source, Destination: string; RemoveYes: Boolean = False): Boolean;
     function DeleteFile(const FilePath: string): Boolean;
     function DeleteFiles(const FolderPath: string; const Files: TStringList): Boolean;
     function DeleteFilesInDirectory(const FolderPath: string): Boolean;
+
     function SelectFolder(const InitialDir: string = ''): string;
     function JoinPathToFileName(const FolderPath, FileName: string): string;
+
     property Directory: string read FDirectory write SetDirectory;
   end;
+
+  // TFileBase
+// ***********************************************************************************************
+
+
+// ***********************************************************************************************
+// TPrepareYangsoofile
 
   TPrepareYangsoofile = class(TFileBase)
   public
     constructor Create(const Directory: string = 'D:\05_Send\'); override;
+
+    procedure SetBASEDIR(const Directory: string = '');  override;
     procedure InitialSetYangsooExcel;
     procedure AqtFileToSend(WellNo: Integer = 1; AqtStepInclude: Boolean = False);
     procedure DuplicateYangsooExcel(Cnt: Integer);
   end;
+
+// TPrepareYangsoofile
+// ***********************************************************************************************
+
+
+// ***********************************************************************************************
+//TTransferYangSooFile
 
   TTransferYangSooFile = class(TFileBase)
   private
@@ -122,13 +160,19 @@ type
       const Keys: array of string; const TargetDirectory, DebugMessage: string): Boolean;
   public
     constructor Create(const Directory: string = ''); override;
+
     function IsItYangsooFolder(const FolderName: string): string;
     function IsItYangsooInside(const FolderName: string): Boolean;
     procedure SetDirInsideYangsooTest;
+
     function SetBASEDIR(const Directory: string = ''): string;  override;
     function MoveOriginToIhanseol(const FolderPath: string): Boolean;
     procedure Test;
   end;
+
+// TTransferYangSooFile
+// ***********************************************************************************************
+
 
 implementation
 
@@ -175,28 +219,6 @@ begin
       Writeln(Message);
 end;
 
-{ TPathChecker }
-
-function TPathChecker.CheckPath(const Path: string): Integer;
-begin
-  if Path = '' then
-    Exit(RET_NOTHING);
-  if FileExists(Path) then
-    Exit(RET_FILE);
-  if DirectoryExists(Path) then
-    Exit(RET_DIR);
-  Exit(RET_NOTHING);
-end;
-
-function TPathChecker.ResolvePath(const Path: string): Integer;
-begin
-  Result := CheckPath(Path);
-  case Result of
-    RET_FILE: Writeln('Given Path is File');
-    RET_DIR: Writeln('Given Path is DIR');
-    RET_NOTHING: Writeln('Given Path is NOTHING');
-  end;
-end;
 
 { TFileBase }
 
@@ -204,7 +226,7 @@ constructor TFileBase.Create(const Directory: string);
 begin
   inherited Create;
   FFiles := TStringList.Create;
-  if CheckPath(Directory) = TPathChecker.RET_DIR then
+  if CheckPath(Directory) = self.RET_DIR then
     SetDirectory(Directory)
   else
     SetDirectory('D:\05_Send\');
@@ -227,6 +249,29 @@ begin
   FFiles.Clear;
   if DirectoryExists(FDirectory) then
     FFiles.AddStrings(TDirectory.GetFiles(FDirectory));
+end;
+
+
+function TFileBase.CheckPath(const Path: string): Integer;
+begin
+  if Path = '' then
+    Exit(RET_NOTHING);
+  if FileExists(Path) then
+    Exit(RET_FILE);
+  if DirectoryExists(Path) then
+    Exit(RET_DIR);
+  Exit(RET_NOTHING);
+end;
+
+
+function TFileBase.ResolvePath(const Path: string): Integer;
+begin
+  Result := CheckPath(Path);
+  case Result of
+    RET_FILE: Writeln('Given Path is File');
+    RET_DIR: Writeln('Given Path is DIR');
+    RET_NOTHING: Writeln('Given Path is NOTHING');
+  end;
 end;
 
 function TFileBase.GetFilesByExtension(const Extension: string): TStringList;
@@ -345,7 +390,7 @@ begin
   except
     on E: EDirectoryNotFoundException do
       Result.Add(Format('The directory ''%s'' does not exist.', [Path]));
-    on E: EAccessDenied do
+   on E: EOSError do  // Changed from EAccessDenied to EOSError
       Result.Add(Format('Permission denied to access the directory ''%s''.', [Path]));
     on E: Exception do
       Result.Add(Format('An error occurred: %s', [E.Message]));
@@ -370,23 +415,6 @@ begin
   end;
 end;
 
-function TFileBase.ListNonHiddenDirectories(const Path: string): TStringList;
-begin
-  Result := TStringList.Create;
-  try
-    Result.AddStrings(TDirectory.GetDirectories(Path, function(const Dir: string): Boolean
-    begin
-      Result := not Dir.StartsWith('.');
-    end));
-  except
-    on E: EDirectoryNotFoundException do
-      Result.Add(Format('The directory ''%s'' does not exist.', [Path]));
-    on E: EAccessDenied do
-      Result.Add(Format('Permission denied to access the directory ''%s''.', [Path]));
-    on E: Exception do
-      Result.Add(Format('An error occurred: %s', [E.Message]));
-  end;
-end;
 
 function TFileBase.ListHiddenDirectories(const Path: string): TStringList;
 var
@@ -402,12 +430,14 @@ begin
   except
     on E: EDirectoryNotFoundException do
       Result.Add(Format('The directory ''%s'' does not exist.', [Path]));
-    on E: EAccessDenied do
+    on E: EOSError do  // Changed from EAccessDenied to EOSError
       Result.Add(Format('Permission denied to access the directory ''%s''.', [Path]));
     on E: Exception do
       Result.Add(Format('An error occurred: %s', [E.Message]));
   end;
 end;
+
+
 
 function TFileBase.LastOne(const Path: string): string;
 var
@@ -419,7 +449,7 @@ end;
 
 function TFileBase.GetDirName(const FilePath: string): string;
 begin
-  if CheckPath(FilePath) = TPathChecker.RET_NOTHING then
+  if CheckPath(FilePath) = self.RET_NOTHING then
   begin
     Writeln('get_dirname arg is not path ... ', FilePath);
     Exit('');
@@ -429,7 +459,7 @@ end;
 
 function TFileBase.GetBaseName(const FilePath: string): string;
 begin
-  if CheckPath(FilePath) = TPathChecker.RET_NOTHING then
+  if CheckPath(FilePath) = self.RET_NOTHING then
   begin
     Writeln('get_dirname arg is not path ... ', FilePath);
     Exit('');
@@ -439,7 +469,7 @@ end;
 
 function TFileBase.IsExist(const FilePath: string): Boolean;
 begin
-  if CheckPath(FilePath) = TPathChecker.RET_NOTHING then
+  if CheckPath(FilePath) = self.RET_NOTHING then
   begin
     Writeln('get_dirname arg is not path ... ', FilePath);
     Exit(False);
@@ -525,7 +555,7 @@ end;
 
 function TFileBase.DeleteFile(const FilePath: string): Boolean;
 begin
-  if CheckPath(FilePath) = TPathChecker.RET_FILE then
+  if CheckPath(FilePath) = self.RET_FILE then
   begin
     try
       if FileExists(FilePath) then
@@ -561,7 +591,7 @@ begin
     for I := 0 to Files.Count - 1 do
     begin
       FilePath := IncludeTrailingPathDelimiter(FolderPath) + Files[I];
-      if CheckPath(FilePath) = TPathChecker.RET_FILE then
+      if CheckPath(FilePath) = self.RET_FILE then
       begin
         try
           TFile.Delete(FilePath);
@@ -591,7 +621,7 @@ function TFileBase.DeleteFilesInDirectory(const FolderPath: string): Boolean;
 var
   Files: TStringList;
 begin
-  if CheckPath(FolderPath) = TPathChecker.RET_DIR then
+  if CheckPath(FolderPath) = self.RET_DIR then
   begin
     Files := TStringList.Create;
     try
@@ -637,7 +667,7 @@ end;
 
 function TFileBase.JoinPathToFileName(const FolderPath, FileName: string): string;
 begin
-  if CheckPath(FolderPath) = TPathChecker.RET_DIR then
+  if CheckPath(FolderPath) = self.RET_DIR then
     Result := IncludeTrailingPathDelimiter(FolderPath) + FileName
   else
     Result := FolderPath;
@@ -655,15 +685,22 @@ end;
 
 procedure TPrepareYangsoofile.InitialSetYangsooExcel;
 begin
-  CopyFile(TC_DIR + YANGSOO_EXCEL, SEND + YANGSOO_EXCEL);
+  CopyFile(FTC_DIR + FYANGSOO_EXCEL, FSEND + FYANGSOO_EXCEL);
+end;
+
+
+procedure TPrepareYangsoofile.SetBASEDIR(const Directory: string);
+begin
+  inherited;
+
 end;
 
 procedure TPrepareYangsoofile.AqtFileToSend(WellNo: Integer; AqtStepInclude: Boolean);
 begin
   if AqtStepInclude then
-    CopyFile(TC_DIR + STEP_FILE, SEND + Format('w%d%s', [WellNo, STEP_FILE]));
-  CopyFile(TC_DIR + LONG_FILE, SEND + Format('w%d%s', [WellNo, LONG_FILE]));
-  CopyFile(TC_DIR + RECOVER_FILE, SEND + Format('w%d%s', [WellNo, RECOVER_FILE]));
+    CopyFile(FTC_DIR + FSTEP_FILE, SEND + Format('w%d%s', [WellNo, FSTEP_FILE]));
+  CopyFile(FTC_DIR + FLONG_FILE, SEND + Format('w%d%s', [WellNo, FLONG_FILE]));
+  CopyFile(FTC_DIR + FRECOVER_FILE, SEND + Format('w%d%s', [WellNo, FRECOVER_FILE]));
 end;
 
 procedure TPrepareYangsoofile.DuplicateYangsooExcel(Cnt: Integer);
@@ -673,7 +710,7 @@ begin
   DeleteFilesInDirectory(SEND);
   InitialSetYangsooExcel;
   for I := 2 to Cnt do
-    CopyFile(SEND + YANGSOO_EXCEL, SEND + Format('A%d%s', [I, YANGSOO_REST]));
+    CopyFile(SEND + FYANGSOO_EXCEL, SEND + Format('A%d%s', [I, FYANGSOO_REST]));
 end;
 
 { TTransferYangSooFile }
@@ -727,32 +764,58 @@ begin
 end;
 
 function TTransferYangSooFile.DirYangsooTest: string;
+// Correct way to create and use a TStringList
+var
+  TempList: TStringList;
 begin
-  FDIR_YANGSOO_TEST := JoinPathFromList(TStringList.Create.Text := FBASEDIR + FYANGSOO_BASE);
+  TempList := TStringList.Create;
+  try
+    TempList.Add(FBASEDIR + FYANGSOO_BASE);
+    FDIR_YANGSOO_TEST := JoinPathFromList(TempList);
   if not DirectoryExists(FDIR_YANGSOO_TEST) then
     ForceDirectories(FDIR_YANGSOO_TEST);
   Result := FDIR_YANGSOO_TEST;
+
+  finally
+    TempList.Free;
+  end;
+
 end;
 
 function TTransferYangSooFile.DirPrn: string;
+var
+  TempList: TStringList;
 begin
-  FDIR_PRN := JoinPathFromList(TStringList.Create.Text := FBASEDIR + FYANGSOO_BASE + FPRN_BASE);
+  TempList := TStringList.Create;
+  TempList.Add(FBASEDIR + FYANGSOO_BASE + FPRN_BASE);
+
+  FDIR_PRN := JoinPathFromList(TempList);
   if not DirectoryExists(FDIR_PRN) then
     ForceDirectories(FDIR_PRN);
   Result := FDIR_PRN;
 end;
 
 function TTransferYangSooFile.DirAqt: string;
+var
+  TempList: TStringList;
 begin
-  FDIR_AQT := JoinPathFromList(TStringList.Create.Text := FBASEDIR + FYANGSOO_BASE + FAQT_BASE);
+  TempList := TStringList.Create;
+  TempList.Add(FBASEDIR + FYANGSOO_BASE + FAQT_BASE);
+
+  FDIR_AQT := JoinPathFromList(TempList);
   if not DirectoryExists(FDIR_AQT) then
     ForceDirectories(FDIR_AQT);
   Result := FDIR_AQT;
 end;
 
 function TTransferYangSooFile.DirYangsooIlbo: string;
+var
+  TempList: TStringList;
 begin
-  FDIR_YANGSOOILBO := JoinPathFromList(TStringList.Create.Text := FBASEDIR + FYANGSOO_BASE + FYANGSOOILBO_BASE);
+  TempList := TStringList.Create;
+  TempList.Add(FBASEDIR + FYANGSOO_BASE + FYANGSOOILBO_BASE);
+
+  FDIR_YANGSOOILBO := JoinPathFromList(TempList);
   if not DirectoryExists(FDIR_YANGSOOILBO) then
     ForceDirectories(FDIR_YANGSOOILBO);
   Result := FDIR_YANGSOOILBO;
@@ -762,8 +825,9 @@ procedure TTransferYangSooFile.SetDirInsideYangsooTest;
 var
   InsideYangsooTest: TStringList;
   Arg01, Arg02, Arg03: string;
+  TempList1, TempList2, TempList3: TStringList;
 begin
-  if CheckPath(DirYangsooTest) <> TPathChecker.RET_DIR then
+  if CheckPath(DirYangsooTest) <> self.RET_DIR then
   begin
     ForceDirectories(FDIR_YANGSOO_TEST);
     ChDir(FDIR_YANGSOO_TEST);
@@ -792,9 +856,15 @@ begin
         Writeln(Arg01);
         Writeln(Arg02);
         Writeln(Arg03);
-        FDIR_PRN := JoinPathFromList(TStringList.Create.Text := FDIR_YANGSOO_TEST + '\' + Arg01);
-        FDIR_AQT := JoinPathFromList(TStringList.Create.Text := FDIR_YANGSOO_TEST + '\' + Arg02);
-        FDIR_YANGSOOILBO := JoinPathFromList(TStringList.Create.Text := FDIR_YANGSOO_TEST + '\' + Arg03);
+
+        TempList1.Add(FDIR_YANGSOO_TEST + '\' + Arg01);
+        FDIR_PRN := JoinPathFromList(TempList1);
+
+        TempList2.Add(FDIR_YANGSOO_TEST + '\' + Arg02);
+        FDIR_AQT := JoinPathFromList(TempList2);
+
+        TempList3.Add(FDIR_YANGSOO_TEST + '\' + Arg03);
+        FDIR_YANGSOOILBO := JoinPathFromList(TempList3);
       end
       else
       begin
@@ -819,7 +889,7 @@ begin
   Writeln(Directory);
   Writeln(StringOfChar('*', 50));
 
-  if (Directory <> '') and (CheckPath(Directory) = TPathChecker.RET_DIR) then
+  if (Directory <> '') and (CheckPath(Directory) = self.RET_DIR) then
     FBASEDIR := Directory
   else
   begin

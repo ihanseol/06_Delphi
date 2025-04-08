@@ -11,10 +11,12 @@ type
     Button1: TButton;
     Button2: TButton;
     Edit1: TEdit;
+    Memo1: TMemo;
     procedure Button2Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
+    MemoLog : Tmemo;
   public
     { Public declarations }
   end;
@@ -51,6 +53,14 @@ end;
 procedure TForm1.Button2Click(Sender: TObject);
 begin
 // showmessage('button2 ');
+
+  MemoLog := TMemo.Create(Self);
+  MemoLog.Parent := Self; // Set the form as the parent
+  MemoLog.Align := alClient; // Make it fill the form
+  MemoLog.ScrollBars := ssVertical; // Add a vertical scrollbar
+  MemoLog.Lines.Add('This is a programmatically created TMemo!');
+
+
  Edit1.Text := ' button2 pressed ' ;
 end;
 
