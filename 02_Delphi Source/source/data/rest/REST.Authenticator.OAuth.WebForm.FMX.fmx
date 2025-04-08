@@ -1,0 +1,51 @@
+object frm_OAuthWebForm: Tfrm_OAuthWebForm
+  Left = 0
+  Top = 0
+  Caption = 'Form23'
+  ClientHeight = 567
+  ClientWidth = 384
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnClose = FormClose
+  DesignerMasterStyle = 3
+  object Layout1: TLayout
+    Align = Top
+    Size.Width = 384.000000000000000000
+    Size.Height = 41.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Layout2: TLayout
+    Align = Bottom
+    Position.Y = 517.000000000000000000
+    Size.Width = 384.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    object btn_Close: TButton
+      Anchors = [akRight, akBottom]
+      Position.X = 256.000000000000000000
+      Size.Width = 121.000000000000000000
+      Size.Height = 44.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = '&Close'
+      OnClick = btn_CloseClick
+    end
+  end
+  object Layout3: TLayout
+    Align = Client
+    Size.Width = 384.000000000000000000
+    Size.Height = 476.000000000000000000
+    Size.PlatformDefault = False
+    object WebBrowser: TWebBrowser
+      Align = Client
+      Size.Width = 384.000000000000000000
+      Size.Height = 476.000000000000000000
+      Size.PlatformDefault = False
+      WindowsEngine = IEOnly
+      OnDidFinishLoad = WebBrowserDidFinishLoad
+      OnShouldStartLoadWithRequest = WebBrowserShouldStartLoadWithRequest
+    end
+  end
+end

@@ -1,0 +1,108 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{9F8DCA43-4639-4C39-B410-9DD7CEBCEFD7}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="BuildWinRTL.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="BuildAndroidRTL.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="BuildiOSRTL.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="BuildIOSSIMARM64RTL.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="BuildOSXRTL.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="BuildOSXARM64RTL.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="BuildLinuxRTL.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="BuildWinRTL">
+        <MSBuild Projects="BuildWinRTL.dproj"/>
+    </Target>
+    <Target Name="BuildWinRTL:Clean">
+        <MSBuild Projects="BuildWinRTL.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BuildWinRTL:Make">
+        <MSBuild Projects="BuildWinRTL.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="BuildAndroidRTL">
+        <MSBuild Projects="BuildAndroidRTL.dproj"/>
+    </Target>
+    <Target Name="BuildAndroidRTL:Clean">
+        <MSBuild Projects="BuildAndroidRTL.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BuildAndroidRTL:Make">
+        <MSBuild Projects="BuildAndroidRTL.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="BuildiOSRTL">
+        <MSBuild Projects="BuildiOSRTL.dproj"/>
+    </Target>
+    <Target Name="BuildiOSRTL:Clean">
+        <MSBuild Projects="BuildiOSRTL.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BuildiOSRTL:Make">
+        <MSBuild Projects="BuildiOSRTL.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="BuildIOSSIMARM64RTL">
+        <MSBuild Projects="BuildIOSSIMARM64RTL.dproj"/>
+    </Target>
+    <Target Name="BuildIOSSIMARM64RTL:Clean">
+        <MSBuild Projects="BuildIOSSIMARM64RTL.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BuildIOSSIMARM64RTL:Make">
+        <MSBuild Projects="BuildIOSSIMARM64RTL.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="BuildOSXRTL">
+        <MSBuild Projects="BuildOSXRTL.dproj"/>
+    </Target>
+    <Target Name="BuildOSXRTL:Clean">
+        <MSBuild Projects="BuildOSXRTL.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BuildOSXRTL:Make">
+        <MSBuild Projects="BuildOSXRTL.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="BuildOSXARM64RTL">
+        <MSBuild Projects="BuildOSXARM64RTL.dproj"/>
+    </Target>
+    <Target Name="BuildOSXARM64RTL:Clean">
+        <MSBuild Projects="BuildOSXARM64RTL.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BuildOSXARM64RTL:Make">
+        <MSBuild Projects="BuildOSXARM64RTL.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="BuildLinuxRTL">
+        <MSBuild Projects="BuildLinuxRTL.dproj"/>
+    </Target>
+    <Target Name="BuildLinuxRTL:Clean">
+        <MSBuild Projects="BuildLinuxRTL.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BuildLinuxRTL:Make">
+        <MSBuild Projects="BuildLinuxRTL.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="BuildWinRTL;BuildAndroidRTL;BuildiOSRTL;BuildIOSSIMARM64RTL;BuildOSXRTL;BuildOSXARM64RTL;BuildLinuxRTL"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="BuildWinRTL:Clean;BuildAndroidRTL:Clean;BuildiOSRTL:Clean;BuildIOSSIMARM64RTL:Clean;BuildOSXRTL:Clean;BuildOSXARM64RTL:Clean;BuildLinuxRTL:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="BuildWinRTL:Make;BuildAndroidRTL:Make;BuildiOSRTL:Make;BuildIOSSIMARM64RTL:Make;BuildOSXRTL:Make;BuildOSXARM64RTL:Make;BuildLinuxRTL:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
