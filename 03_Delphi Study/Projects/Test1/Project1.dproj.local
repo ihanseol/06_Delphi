@@ -1,18 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899-12-30 00:00:00.000.706,C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\start.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.480,=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.091,C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Unit3.pas=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Test1\Unit3.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.911,C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Test1\Project1.dproj</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.541,C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Test1\Unit1.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.834,=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.053,=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Unit3.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.294,=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Unit3.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.527,C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Unit2.pas=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Test1\Unit2.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.541,C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Test1\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.926,=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Test1\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.911,C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Test1\Project1.dproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.537,=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.834,=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.706,C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\start.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.178,=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Test1\Unit2.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.763,C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Test1\Unit2.pas=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Test1\UnitPerson.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.538,=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Test1\Unit2.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.029,=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Test1\Unit2.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.040,C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Test1\Unit2.pas=</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.693,C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Test1\Unit2.pas=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Test1\UnitPerson2.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.641,=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.623,C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Test1\Unit3.pas=</Transaction>
     <Transaction>1899-12-30 00:00:00.000.091,C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Unit3.dfm=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Test1\Unit3.dfm</Transaction>
     <Transaction>1899-12-30 00:00:00.000.527,C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Unit2.dfm=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Test1\Unit2.dfm</Transaction>
     <Transaction>1899-12-30 00:00:00.000.706,C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\start.dfm</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.294,=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Unit3.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.527,C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Unit2.pas=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Test1\Unit2.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.641,=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
   </Transactions>
 </BorlandProject>
