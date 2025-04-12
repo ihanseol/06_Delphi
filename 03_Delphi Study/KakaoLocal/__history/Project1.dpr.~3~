@@ -1,0 +1,24 @@
+program Project1;
+
+{$APPTYPE CONSOLE}
+
+{$R *.res}
+
+uses
+  System.SysUtils,
+  kakao,
+  KakaoLocalAPI in 'KakaoLocalAPI.pas',
+  KakaoLocalAPIDemo in 'KakaoLocalAPIDemo.pas';
+
+uses
+  System.SysUtils,
+  kakao-local-api-delphi in 'kakao-local-api-delphi.pas';
+
+begin
+  try
+    { TODO -oUser -cConsole Main : Insert code here }
+  except
+    on E: Exception do
+      Writeln(E.ClassName, ': ', E.Message);
+  end;
+end.

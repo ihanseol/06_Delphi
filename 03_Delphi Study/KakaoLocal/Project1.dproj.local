@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2025-04-12 15:07:46.792,C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\KakaoLocal\Project1.dproj=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2025-04-12 15:09:38.337,=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\KakaoLocal\KakaoLocalAPI.pas</Transaction>
+    <Transaction>2025-04-12 15:09:55.178,=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\KakaoLocal\Unit1.pas</Transaction>
+    <Transaction>2025-04-12 15:10:22.327,C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\KakaoLocal\KakaoLocalAPIDemo.pas=C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\KakaoLocal\Unit1.pas</Transaction>
+    <Transaction>2025-04-12 15:18:26.074,C:\Users\minhwasoo\Documents\Embarcadero\Studio\Projects\KakaoLocal\KakaoLocalAPIDemo.pas=</Transaction>
+  </Transactions>
+</BorlandProject>
