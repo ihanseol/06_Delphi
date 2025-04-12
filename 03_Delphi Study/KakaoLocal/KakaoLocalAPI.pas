@@ -15,11 +15,13 @@ type
 
     function ExtractCoordinates(const JsonData: TJSONArray): TPair<string, string>;
     procedure TransformCoordinates(const X, Y: string);
+    function TransformCoordinatesReturn(const X, Y: string): string;
   public
     constructor Create(const API_KEY: string);
     destructor Destroy; override;
 
     procedure SearchAddress(const Address: string);
+    function SearchAddressRerurn(const Address: string): String;
   end;
 
 implementation
@@ -92,6 +94,47 @@ begin
   end;
 end;
 
+
+function TKakaoLocalAPI.TransformCoordinatesReturn(const X, Y: string): string;
+var
+  URL: string;
+  Response: IHTTPResponse;
+  JsonData: TJSONObject;
+  Documents: TJSONArray;
+  TransformedX, TransformedY: string;
+  CoordinateText: string;
+  JsonObj: TJSONObject;
+begin
+  URL := Format('https://dapi.kakao.com/v2/local/geo/transcoord.json?x=%s&y=%s&input_coord=WGS84&output_coord=TM', [X, Y]);
+  Response := FHttpClient.Get(URL);
+
+  if Response.StatusCode = 200 then
+  begin
+    JsonData := TJSONObject.ParseJSONValue(Response.ContentAsString) as TJSONObject;
+    try
+      Documents := JsonData.GetValue<TJSONArray>('documents');
+      if (Documents <> nil) and (Documents.Count > 0) then
+      begin
+        JsonObj := Documents.Items[0] as TJSONObject;
+        TransformedX := JsonObj.GetValue<string>('x');
+        TransformedY := JsonObj.GetValue<string>('y');
+
+//        WriteLn(Format('x: %s', [TransformedX]));
+//        WriteLn(Format('y: %s', [TransformedY]));
+//        WriteLn('----------------------------------------------------------------------------------------------------');
+
+        CoordinateText := Format('%s,%s', [TransformedX, TransformedY]);
+        Clipboard.AsText := CoordinateText;
+//        WriteLn(CoordinateText);
+        Result := CoordinateText;
+      end;
+    finally
+      JsonData.Free;
+    end;
+  end;
+end;
+
+
 procedure TKakaoLocalAPI.SearchAddress(const Address: string);
 var
   URL: string;
@@ -139,6 +182,52 @@ begin
       WriteLn('----------------------------------------------------------------------------------------------------');
       Write('종료하시려면 엔터키를 누르세요 ~ ');
       ReadLn;
+    finally
+      JsonData.Free;
+    end;
+  end;
+end;
+
+function TKakaoLocalAPI.SearchAddressRerurn(const Address: string): String;
+var
+  URL: string;
+  Response: IHTTPResponse;
+  JsonData: TJSONObject;
+  Documents: TJSONArray;
+  AddressData: string;
+  Coordinates: TPair<string, string>;
+  JsonObj: TJSONObject;
+  AddressObj: TJSONObject;
+begin
+  URL := 'https://dapi.kakao.com/v2/local/search/address.json';
+
+  WriteLn('----------------------------------------------------------------------------------------------------');
+
+  Response := FHttpClient.Get(URL + '?query=' + TNetEncoding.URL.Encode(Address));
+
+  if Response.StatusCode = 200 then
+  begin
+    JsonData := TJSONObject.ParseJSONValue(Response.ContentAsString) as TJSONObject;
+    try
+      Documents := JsonData.GetValue<TJSONArray>('documents');
+      WriteLn(Format('documents: %s', [Documents.ToJSON]));
+
+      AddressData := '';
+
+      if (Documents <> nil) and (Documents.Count > 0) then
+      begin
+        JsonObj := Documents.Items[0] as TJSONObject;
+        AddressObj := JsonObj.GetValue<TJSONObject>('address');
+        AddressData := AddressObj.GetValue<string>('address_name');
+      end;
+
+      WriteLn(AddressData);
+
+      Coordinates := ExtractCoordinates(Documents);
+
+      if (Coordinates.Key <> '') and (Coordinates.Value <> '') then
+        Result := TransformCoordinatesReturn(Coordinates.Key, Coordinates.Value);
+
     finally
       JsonData.Free;
     end;
