@@ -5,7 +5,8 @@ interface
 uses
   System.SysUtils, System.Classes, System.JSON, System.Variants,
   System.Net.HttpClient, System.Net.URLClient, Vcl.Clipbrd, System.Generics.Collections,
-  System.NetEncoding;
+  System.NetEncoding, Vcl.Graphics, Winapi.Windows, Winapi.Messages,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
 
 type
   TKakaoLocalAPI = class
@@ -119,13 +120,8 @@ begin
         TransformedX := JsonObj.GetValue<string>('x');
         TransformedY := JsonObj.GetValue<string>('y');
 
-//        WriteLn(Format('x: %s', [TransformedX]));
-//        WriteLn(Format('y: %s', [TransformedY]));
-//        WriteLn('----------------------------------------------------------------------------------------------------');
-
-        CoordinateText := Format('%s,%s', [TransformedX, TransformedY]);
+        CoordinateText := Format('%s,  %s', [TransformedX, TransformedY]);
         Clipboard.AsText := CoordinateText;
-//        WriteLn(CoordinateText);
         Result := CoordinateText;
       end;
     finally
@@ -200,9 +196,6 @@ var
   AddressObj: TJSONObject;
 begin
   URL := 'https://dapi.kakao.com/v2/local/search/address.json';
-
-  WriteLn('----------------------------------------------------------------------------------------------------');
-
   Response := FHttpClient.Get(URL + '?query=' + TNetEncoding.URL.Encode(Address));
 
   if Response.StatusCode = 200 then
@@ -210,7 +203,7 @@ begin
     JsonData := TJSONObject.ParseJSONValue(Response.ContentAsString) as TJSONObject;
     try
       Documents := JsonData.GetValue<TJSONArray>('documents');
-      WriteLn(Format('documents: %s', [Documents.ToJSON]));
+//      Showmessage(Format('documents: %s', [Documents.ToJSON]));
 
       AddressData := '';
 
@@ -220,8 +213,6 @@ begin
         AddressObj := JsonObj.GetValue<TJSONObject>('address');
         AddressData := AddressObj.GetValue<string>('address_name');
       end;
-
-      WriteLn(AddressData);
 
       Coordinates := ExtractCoordinates(Documents);
 
