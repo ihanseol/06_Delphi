@@ -1,4 +1,4 @@
-object Form1: TForm1
+object frmFirstMain: TfrmFirstMain
   Left = 0
   Top = 0
   BorderStyle = bsDialog
@@ -34,7 +34,7 @@ object Form1: TForm1
     Left = 8
     Top = 56
     Width = 769
-    Height = 41
+    Height = 28
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -15
@@ -52,7 +52,7 @@ object Form1: TForm1
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -15
-    Font.Name = 'Consolas NF'
+    Font.Name = 'Consolas'
     Font.Style = []
     Lines.Strings = (
       'memoResult')
