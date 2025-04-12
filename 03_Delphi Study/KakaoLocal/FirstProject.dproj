@@ -127,14 +127,7 @@
             <Form>Form1</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="frmWindowOne.pas">
-            <Form>Form2</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="frmWindowTwo.pas">
-            <Form>Form3</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
+        <DCCReference Include="KakaoLocalAPI.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
