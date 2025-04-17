@@ -1,0 +1,14 @@
+object frmMain: TfrmMain
+  Left = 0
+  Top = 0
+  Caption = #46020#49436#45824#50668#54532#47196#44536#47016
+  ClientHeight = 554
+  ClientWidth = 956
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  TextHeight = 15
+end

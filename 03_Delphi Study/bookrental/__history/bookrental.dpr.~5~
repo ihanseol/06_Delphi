@@ -1,0 +1,18 @@
+program bookrental;
+
+uses
+  Vcl.Forms,
+  mainform in 'mainform.pas' {frmMain},
+  dataAccessModule in 'dataAccessModule.pas' {dmDataAccess: TDataModule},
+  BookForm in 'BookForm.pas' {frmBook};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TfrmMain, frmMain);
+  Application.CreateForm(TdmDataAccess, dmDataAccess);
+  Application.CreateForm(TfrmBook, frmBook);
+  Application.Run;
+end.

@@ -1,0 +1,26 @@
+object dmDataAccess: TdmDataAccess
+  Height = 480
+  Width = 640
+  object conBookRental: TFDConnection
+    Params.Strings = (
+      
+        'Database=C:\Users\minhwasoo\Desktop\DelphiLearning\bookrental\DB' +
+        '\BOOKRENTAL.IB'
+      'User_Name=sysdba'
+      'Password=masterkey'
+      'CharacterSet=UTF8'
+      'DriverID=IB')
+    Connected = True
+    LoginPrompt = False
+    Left = 104
+    Top = 56
+  end
+  object qryBook: TFDQuery
+    Active = True
+    Connection = conBookRental
+    SQL.Strings = (
+      '                               SELECT * FROM BOOK')
+    Left = 104
+    Top = 136
+  end
+end
