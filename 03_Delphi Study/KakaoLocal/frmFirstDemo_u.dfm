@@ -52,7 +52,7 @@ object frmFirstMain: TfrmFirstMain
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -15
-    Font.Name = 'Consolas'
+    Font.Name = #47569#51008' '#44256#46357
     Font.Style = []
     Lines.Strings = (
       'memoResult')
